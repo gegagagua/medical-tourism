@@ -1,0 +1,1102 @@
+// Draft data model — docs/SPEC.md §6.
+// Prisma 7+: connection URL in packages/db/prisma.config.ts; PrismaClient via @prisma/adapter-pg.
+// Conventions: UUID ids, timestamptz, money in minor units + ISO currency, encrypted = Bytes + keyVersion.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────── Enums ─────────────
+
+enum Locale {
+  en
+  ru
+  he
+  ar
+  de
+  ka
+}
+
+enum Role {
+  PATIENT
+  CLINIC_ADMIN
+  CLINIC_DOCTOR
+  COORDINATOR
+  ADMIN
+  PARTNER
+  FACILITATOR
+}
+
+enum Permission {
+  SENSITIVE_CASES
+  APPROVE_CLINICS
+  ISSUE_REFUNDS
+  MANAGE_CONTENT
+}
+
+enum ClinicStatus {
+  APPLIED
+  VETTING
+  ACTIVE
+  SUSPENDED
+}
+
+enum ClinicCapability {
+  ENGLISH_STAFF
+  RUSSIAN_STAFF
+  HEBREW_STAFF
+  ARABIC_STAFF
+  CBCT_XRAY
+  GENERAL_ANESTHESIA
+  INPATIENT_24_7
+  AIRPORT_PICKUP
+}
+
+enum PriceUnit {
+  PER_TOOTH
+  PER_IMPLANT
+  PER_ARCH
+  PER_GRAFT
+  PER_SESSION
+  PER_COURSE
+  PER_DAY
+  FIXED
+}
+
+enum CaseStatus {
+  NEW
+  AWAITING_FILES
+  IN_REVIEW
+  OFFERS_SENT
+  OFFER_ACCEPTED
+  DEPOSIT_PAID
+  TRIP_PLANNED
+  ARRIVED
+  IN_TREATMENT
+  TREATED
+  FOLLOW_UP
+  CLOSED_WON
+  CLOSED_LOST
+  ON_HOLD
+}
+
+enum RequesterRelation {
+  SELF
+  FAMILY_MEMBER
+  FRIEND
+  FACILITATOR
+}
+
+enum FileKind {
+  PHOTO
+  XRAY
+  CT_SCAN
+  LAB_RESULT
+  MEDICAL_REPORT
+  OTHER
+}
+
+enum ScanStatus {
+  PENDING
+  CLEAN
+  INFECTED
+  FAILED
+}
+
+enum OfferStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  DECLINED
+  EXPIRED
+  WITHDRAWN
+}
+
+enum OrderType {
+  DEPOSIT
+  PACKAGE_ITEMS
+  CONSULTATION
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+enum VisitStatus {
+  SCHEDULED
+  DONE
+  MISSED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  VOID
+}
+
+enum Channel {
+  EMAIL
+  TELEGRAM
+  WHATSAPP
+  INTERNAL_NOTE
+  PORTAL
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+  INTERNAL
+}
+
+enum TaskStatus {
+  OPEN
+  DONE
+  CANCELLED
+}
+
+enum ConsentType {
+  DATA_PROCESSING
+  CLINIC_SHARING
+  MARKETING
+  ANALYTICS_COOKIES
+  MARKETING_COOKIES
+  PUBLIC_MEDIA
+  PUBLIC_REVIEW
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ComplicationStatus {
+  OPEN
+  CLINIC_RESPONDED
+  RESOLVED
+}
+
+enum CallType {
+  WHATSAPP_VIDEO
+  PHONE
+  GOOGLE_MEET
+}
+
+enum ConsultationStatus {
+  BOOKED
+  COMPLETED
+  NO_SHOW
+  CANCELLED
+}
+
+enum PartnerType {
+  HOTEL
+  TRANSFER
+  INTERPRETER
+  INSURANCE
+  FACILITATOR
+}
+
+// ───────────── Identity ─────────────
+
+model User {
+  id             String    @id @default(uuid()) @db.Uuid
+  email          String    @unique
+  emailVerified  DateTime? @db.Timestamptz
+  passwordHash   String?
+  googleId       String?   @unique
+  firstName      String?
+  lastName       String?
+  phone          String?
+  whatsapp       String?
+  telegramChatId String?   @unique
+  locale         Locale    @default(en)
+  timeZone       String    @default("UTC")
+  countryCode    String?   @db.Char(2)
+  totpSecretEncrypted Bytes?
+  totpEnabled    Boolean   @default(false)
+  anonymizedAt   DateTime? @db.Timestamptz
+  createdAt      DateTime  @default(now()) @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @db.Timestamptz
+
+  roles          UserRole[]
+  permissions    UserPermission[]
+  refreshTokens  RefreshToken[]
+  consents       Consent[]
+  clinicMembers  ClinicMember[]
+  casesAsPatient Case[]           @relation("CasePatient")
+  casesAssigned  Case[]           @relation("CaseCoordinator")
+  tasks          Task[]           @relation("TaskAssignee")
+  consultationRules ConsultationAvailability[]
+  consultations  ConsultationBooking[]
+  auditEntries   AuditLog[]
+  facilitator    Partner?         @relation("FacilitatorUser", fields: [facilitatorPartnerId], references: [id])
+  facilitatorPartnerId String?    @db.Uuid
+}
+
+model UserRole {
+  userId String @db.Uuid
+  role   Role
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, role])
+}
+
+model UserPermission {
+  userId     String     @db.Uuid
+  permission Permission
+  grantedById String?   @db.Uuid
+  grantedAt  DateTime   @default(now()) @db.Timestamptz
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permission])
+}
+
+model RefreshToken {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  familyId   String    @db.Uuid
+  tokenHash  String    @unique
+  expiresAt  DateTime  @db.Timestamptz
+  revokedAt  DateTime? @db.Timestamptz
+  createdAt  DateTime  @default(now()) @db.Timestamptz
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+}
+
+model LoginToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  email     String
+  kind      String    // "otp" | "magic_link"
+  codeHash  String
+  expiresAt DateTime  @db.Timestamptz
+  usedAt    DateTime? @db.Timestamptz
+  attempts  Int       @default(0)
+  createdAt DateTime  @default(now()) @db.Timestamptz
+
+  @@index([email])
+}
+
+model ConsentVersion {
+  id          String      @id @default(uuid()) @db.Uuid
+  type        ConsentType
+  version     Int
+  locale      Locale
+  text        String
+  publishedAt DateTime    @db.Timestamptz
+  consents    Consent[]
+
+  @@unique([type, version, locale])
+}
+
+model Consent {
+  id               String         @id @default(uuid()) @db.Uuid
+  userId           String         @db.Uuid
+  consentVersionId String         @db.Uuid
+  caseId           String?        @db.Uuid
+  granted          Boolean
+  ip               String?
+  userAgent        String?
+  createdAt        DateTime       @default(now()) @db.Timestamptz
+  user             User           @relation(fields: [userId], references: [id])
+  consentVersion   ConsentVersion @relation(fields: [consentVersionId], references: [id])
+  case             Case?          @relation(fields: [caseId], references: [id])
+
+  @@index([userId])
+}
+
+// ───────────── Catalog ─────────────
+
+model Specialty {
+  id           String                 @id @default(uuid()) @db.Uuid
+  key          String                 @unique // "dentistry", "hair-transplant", "dermatology", "addiction", ...
+  priority     Int                    // lower = more prominent
+  isSensitive  Boolean                @default(false)
+  isBookable   Boolean                @default(true)
+  translations SpecialtyTranslation[]
+  procedures   Procedure[]
+  clinics      ClinicSpecialty[]
+  questionnaires QuestionnaireTemplate[]
+  cases        Case[]
+}
+
+model SpecialtyTranslation {
+  specialtyId    String    @db.Uuid
+  locale         Locale
+  name           String
+  slug           String
+  summary        String?
+  seoTitle       String?
+  seoDescription String?
+  specialty      Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@id([specialtyId, locale])
+  @@unique([locale, slug])
+}
+
+model Procedure {
+  id               String                 @id @default(uuid()) @db.Uuid
+  specialtyId      String                 @db.Uuid
+  key              String                 @unique // "dental-implant", "extraction", "filling", "cleaning", "fue", ...
+  unit             PriceUnit
+  indicativeMinMinor Int?
+  indicativeMaxMinor Int?
+  indicativeCurrency String?              @db.Char(3)
+  typicalStayDays  Int?
+  visitsNeeded     Int                    @default(1)
+  requiredFiles    FileKind[]
+  isActive         Boolean                @default(true)
+  specialty        Specialty              @relation(fields: [specialtyId], references: [id])
+  translations     ProcedureTranslation[]
+  clinicPrices     ClinicProcedurePrice[]
+  homePrices       HomePriceReference[]
+  offerItems       OfferItem[]
+  caseProcedures   CaseProcedure[]
+}
+
+model ProcedureTranslation {
+  procedureId    String    @db.Uuid
+  locale         Locale
+  name           String
+  slug           String
+  description    String?   // Markdown, reviewed by a doctor
+  seoTitle       String?
+  seoDescription String?
+  procedure      Procedure @relation(fields: [procedureId], references: [id], onDelete: Cascade)
+
+  @@id([procedureId, locale])
+  @@unique([locale, slug])
+}
+
+model QuestionnaireTemplate {
+  id          String    @id @default(uuid()) @db.Uuid
+  specialtyId String    @db.Uuid
+  version     Int
+  schema      Json      // questions + translations, rendered by the web app
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+  specialty   Specialty @relation(fields: [specialtyId], references: [id])
+
+  @@unique([specialtyId, version])
+}
+
+model PackageItemType {
+  id            String  @id @default(uuid()) @db.Uuid
+  key           String  @unique // "hotel_night", "airport_transfer", "interpreter_day", "sim", "city_tour", "concierge"
+  costMinor     Int
+  priceMinor    Int     // platform margin = price - cost
+  currency      String  @db.Char(3)
+  partnerId     String? @db.Uuid
+  isActive      Boolean @default(true)
+  partner       Partner? @relation(fields: [partnerId], references: [id])
+  tripItems     TripItem[]
+}
+
+// ───────────── Clinics ─────────────
+
+model Clinic {
+  id             String             @id @default(uuid()) @db.Uuid
+  slug           String             @unique
+  legalName      String
+  displayName    String
+  city           String             @default("Tbilisi")
+  address        String?
+  status         ClinicStatus       @default(APPLIED)
+  capabilities   ClinicCapability[]
+  licenseNumber  String?
+  licenseFileKey String?
+  insuranceValidTo DateTime?        @db.Date
+  warrantyPolicy String?
+  siteVisitAt    DateTime?          @db.Timestamptz
+  contractSignedAt DateTime?        @db.Timestamptz
+  defaultCommissionBp Int?          // basis points override
+  createdAt      DateTime           @default(now()) @db.Timestamptz
+  updatedAt      DateTime           @updatedAt @db.Timestamptz
+
+  translations   ClinicTranslation[]
+  specialties    ClinicSpecialty[]
+  members        ClinicMember[]
+  doctors        Doctor[]
+  prices         ClinicProcedurePrice[]
+  shares         CaseShare[]
+  offers         Offer[]
+  visits         Visit[]
+  commissionRules CommissionRule[]
+  commissions    CommissionRecord[]
+  invoices       ClinicInvoice[]
+  reviews        Review[]
+  complications  ComplicationReport[]
+}
+
+model ClinicTranslation {
+  clinicId    String @db.Uuid
+  locale      Locale
+  description String
+  seoTitle    String?
+  seoDescription String?
+  clinic      Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
+  @@id([clinicId, locale])
+}
+
+model ClinicSpecialty {
+  clinicId    String    @db.Uuid
+  specialtyId String    @db.Uuid
+  clinic      Clinic    @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@id([clinicId, specialtyId])
+}
+
+model ClinicMember {
+  clinicId String @db.Uuid
+  userId   String @db.Uuid
+  role     Role   // CLINIC_ADMIN | CLINIC_DOCTOR
+  doctorId String? @unique @db.Uuid
+  clinic   Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+
+  @@id([clinicId, userId])
+}
+
+model Doctor {
+  id              String              @id @default(uuid()) @db.Uuid
+  clinicId        String              @db.Uuid
+  slug            String              @unique
+  fullName        String
+  photoUrl        String?
+  yearsExperience Int?
+  languages       String[]
+  isActive        Boolean             @default(true)
+  clinic          Clinic              @relation(fields: [clinicId], references: [id])
+  translations    DoctorTranslation[]
+  member          ClinicMember?
+  offers          Offer[]
+  posts           Post[]
+  reviews         Review[]
+}
+
+model DoctorTranslation {
+  doctorId  String @db.Uuid
+  locale    Locale
+  title     String
+  bio       String
+  education String?
+  doctor    Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+
+  @@id([doctorId, locale])
+}
+
+model ClinicProcedurePrice {
+  id          String    @id @default(uuid()) @db.Uuid
+  clinicId    String    @db.Uuid
+  procedureId String    @db.Uuid
+  currency    String    @db.Char(3)
+  minMinor    Int
+  maxMinor    Int
+  validFrom   DateTime  @default(now()) @db.Timestamptz
+  validTo     DateTime? @db.Timestamptz
+  clinic      Clinic    @relation(fields: [clinicId], references: [id])
+  procedure   Procedure @relation(fields: [procedureId], references: [id])
+
+  @@index([clinicId, procedureId])
+}
+
+// ───────────── Cases ─────────────
+
+model Case {
+  id               String            @id @default(uuid()) @db.Uuid
+  reference        String            @unique // human-friendly, e.g. "GE-26-01234"
+  patientId        String            @db.Uuid
+  coordinatorId    String?           @db.Uuid
+  specialtyId      String            @db.Uuid
+  parentCaseId     String?           @db.Uuid
+  status           CaseStatus        @default(NEW)
+  statusBeforeHold CaseStatus?
+  requesterRelation RequesterRelation @default(SELF)
+  patientCountry   String?           @db.Char(2)
+  preferredLocale  Locale            @default(en)
+  travelFrom       DateTime?         @db.Date
+  travelTo         DateTime?         @db.Date
+  companions       Int               @default(0)
+  answersEncrypted Bytes?
+  questionnaireId  String?           @db.Uuid
+  keyVersion       Int?
+  lostReason       String?
+  attribution      Json?             // { utmSource, utmMedium, utmCampaign, referrer, landingPath, facilitatorRef }
+  facilitatorId    String?           @db.Uuid
+  createdAt        DateTime          @default(now()) @db.Timestamptz
+  updatedAt        DateTime          @updatedAt @db.Timestamptz
+
+  patient          User              @relation("CasePatient", fields: [patientId], references: [id])
+  coordinator      User?             @relation("CaseCoordinator", fields: [coordinatorId], references: [id])
+  specialty        Specialty         @relation(fields: [specialtyId], references: [id])
+  parentCase       Case?             @relation("CaseChain", fields: [parentCaseId], references: [id])
+  childCases       Case[]            @relation("CaseChain")
+  facilitator      Partner?          @relation(fields: [facilitatorId], references: [id])
+  procedures       CaseProcedure[]
+  files            CaseFile[]
+  shares           CaseShare[]
+  offers           Offer[]
+  events           CaseEvent[]
+  orders           Order[]
+  trip             Trip?
+  visits           Visit[]
+  commission       CommissionRecord?
+  conversation     Conversation?
+  tasks            Task[]
+  reviews          Review[]
+  complications    ComplicationReport[]
+  consents         Consent[]
+  consultations    ConsultationBooking[]
+
+  @@index([status, updatedAt])
+  @@index([coordinatorId, status])
+  @@index([patientId])
+}
+
+model CaseProcedure {
+  caseId      String    @db.Uuid
+  procedureId String    @db.Uuid
+  quantity    Int?
+  case        Case      @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  procedure   Procedure @relation(fields: [procedureId], references: [id])
+
+  @@id([caseId, procedureId])
+}
+
+model CaseFile {
+  id              String     @id @default(uuid()) @db.Uuid
+  caseId          String     @db.Uuid
+  kind            FileKind
+  objectKey       String     @unique
+  thumbnailKey    String?
+  mimeType        String
+  sizeBytes       Int
+  wrappedDataKey  Bytes      // per-file key wrapped by FILE_MASTER_KEY
+  masterKeyVersion Int
+  scanStatus      ScanStatus @default(PENDING)
+  uploadedById    String     @db.Uuid
+  deletedAt       DateTime?  @db.Timestamptz
+  createdAt       DateTime   @default(now()) @db.Timestamptz
+  case            Case       @relation(fields: [caseId], references: [id])
+
+  @@index([caseId])
+}
+
+model CaseShare {
+  id         String    @id @default(uuid()) @db.Uuid
+  caseId     String    @db.Uuid
+  clinicId   String    @db.Uuid
+  sharedById String    @db.Uuid
+  revokedAt  DateTime? @db.Timestamptz
+  createdAt  DateTime  @default(now()) @db.Timestamptz
+  case       Case      @relation(fields: [caseId], references: [id])
+  clinic     Clinic    @relation(fields: [clinicId], references: [id])
+
+  @@unique([caseId, clinicId])
+}
+
+model CaseEvent {
+  id         String      @id @default(uuid()) @db.Uuid
+  caseId     String      @db.Uuid
+  actorId    String?     @db.Uuid
+  fromStatus CaseStatus?
+  toStatus   CaseStatus?
+  type       String      // "transition", "share", "offer_sent", "payment", "note"
+  summary    String?     // never clinical content
+  createdAt  DateTime    @default(now()) @db.Timestamptz
+  case       Case        @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, createdAt])
+}
+
+// ───────────── Offers ─────────────
+
+model Offer {
+  id            String      @id @default(uuid()) @db.Uuid
+  caseId        String      @db.Uuid
+  clinicId      String      @db.Uuid
+  doctorId      String?     @db.Uuid
+  status        OfferStatus @default(DRAFT)
+  currency      String      @db.Char(3)
+  totalMinor    Int
+  visits        Int         @default(1)
+  daysPerVisit  Int?
+  warrantyText  String?
+  notesEncrypted Bytes?
+  keyVersion    Int?
+  validUntil    DateTime?   @db.Timestamptz
+  priceFlagged  Boolean     @default(false) // item above clinic price list max
+  sentAt        DateTime?   @db.Timestamptz
+  decidedAt     DateTime?   @db.Timestamptz
+  createdAt     DateTime    @default(now()) @db.Timestamptz
+  updatedAt     DateTime    @updatedAt @db.Timestamptz
+  case          Case        @relation(fields: [caseId], references: [id])
+  clinic        Clinic      @relation(fields: [clinicId], references: [id])
+  doctor        Doctor?     @relation(fields: [doctorId], references: [id])
+  items         OfferItem[]
+
+  @@index([caseId, status])
+  @@index([clinicId, status])
+}
+
+model OfferItem {
+  id             String    @id @default(uuid()) @db.Uuid
+  offerId        String    @db.Uuid
+  procedureId    String    @db.Uuid
+  area           String?   // tooth numbers (FDI), scalp zone, etc.
+  quantity       Int
+  unitPriceMinor Int
+  totalMinor     Int
+  offer          Offer     @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  procedure      Procedure @relation(fields: [procedureId], references: [id])
+}
+
+// ───────────── Payments, trips, visits ─────────────
+
+model Order {
+  id          String      @id @default(uuid()) @db.Uuid
+  caseId      String      @db.Uuid
+  type        OrderType
+  status      OrderStatus @default(PENDING)
+  currency    String      @db.Char(3)
+  totalMinor  Int
+  createdAt   DateTime    @default(now()) @db.Timestamptz
+  updatedAt   DateTime    @updatedAt @db.Timestamptz
+  case        Case        @relation(fields: [caseId], references: [id])
+  payments    Payment[]
+  tripItems   TripItem[]
+
+  @@index([caseId])
+}
+
+model Payment {
+  id            String        @id @default(uuid()) @db.Uuid
+  orderId       String        @db.Uuid
+  provider      String
+  providerRef   String
+  status        PaymentStatus @default(PENDING)
+  amountMinor   Int
+  refundedMinor Int           @default(0)
+  currency      String        @db.Char(3)
+  createdAt     DateTime      @default(now()) @db.Timestamptz
+  updatedAt     DateTime      @updatedAt @db.Timestamptz
+  order         Order         @relation(fields: [orderId], references: [id])
+  events        PaymentEvent[]
+
+  @@unique([provider, providerRef])
+}
+
+model PaymentEvent {
+  id              String   @id @default(uuid()) @db.Uuid
+  paymentId       String?  @db.Uuid
+  provider        String
+  providerEventId String
+  type            String
+  payload         Json
+  receivedAt      DateTime @default(now()) @db.Timestamptz
+  payment         Payment? @relation(fields: [paymentId], references: [id])
+
+  @@unique([provider, providerEventId])
+}
+
+model Trip {
+  id              String     @id @default(uuid()) @db.Uuid
+  caseId          String     @unique @db.Uuid
+  arrivalAt       DateTime?  @db.Timestamptz
+  arrivalFlight   String?
+  departureAt     DateTime?  @db.Timestamptz
+  departureFlight String?
+  companions      Int        @default(0)
+  emergencyContact String?
+  dutyCoordinatorId String?  @db.Uuid
+  createdAt       DateTime   @default(now()) @db.Timestamptz
+  updatedAt       DateTime   @updatedAt @db.Timestamptz
+  case            Case       @relation(fields: [caseId], references: [id])
+  items           TripItem[]
+}
+
+model TripItem {
+  id             String          @id @default(uuid()) @db.Uuid
+  tripId         String          @db.Uuid
+  itemTypeId     String          @db.Uuid
+  orderId        String?         @db.Uuid
+  startsAt       DateTime?       @db.Timestamptz
+  endsAt         DateTime?       @db.Timestamptz
+  quantity       Int             @default(1)
+  details        Json?           // hotel room type, driver name/phone, confirmation numbers
+  confirmed      Boolean         @default(false)
+  trip           Trip            @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  itemType       PackageItemType @relation(fields: [itemTypeId], references: [id])
+  order          Order?          @relation(fields: [orderId], references: [id])
+}
+
+model Visit {
+  id        String      @id @default(uuid()) @db.Uuid
+  caseId    String      @db.Uuid
+  clinicId  String      @db.Uuid
+  startsAt  DateTime    @db.Timestamptz
+  endsAt    DateTime    @db.Timestamptz
+  status    VisitStatus @default(SCHEDULED)
+  title     String      // non-clinical label, e.g. "Implant placement"
+  case      Case        @relation(fields: [caseId], references: [id])
+  clinic    Clinic      @relation(fields: [clinicId], references: [id])
+
+  @@index([clinicId, startsAt])
+}
+
+// ───────────── Commissions & invoices ─────────────
+
+model CommissionRule {
+  id          String  @id @default(uuid()) @db.Uuid
+  clinicId    String? @db.Uuid // null = global/specialty default
+  specialtyKey String?        // null = all specialties
+  rateBp      Int             // basis points, 2000 = 20%
+  validFrom   DateTime @default(now()) @db.Timestamptz
+  validTo     DateTime? @db.Timestamptz
+  clinic      Clinic?  @relation(fields: [clinicId], references: [id])
+
+  @@index([clinicId, specialtyKey])
+}
+
+model CommissionRecord {
+  id               String         @id @default(uuid()) @db.Uuid
+  caseId           String         @unique @db.Uuid
+  clinicId         String         @db.Uuid
+  finalAmountMinor Int
+  currency         String         @db.Char(3)
+  rateBp           Int
+  commissionMinor  Int
+  invoiceId        String?        @db.Uuid
+  confirmedById    String         @db.Uuid
+  createdAt        DateTime       @default(now()) @db.Timestamptz
+  case             Case           @relation(fields: [caseId], references: [id])
+  clinic           Clinic         @relation(fields: [clinicId], references: [id])
+  invoice          ClinicInvoice? @relation(fields: [invoiceId], references: [id])
+}
+
+model ClinicInvoice {
+  id          String             @id @default(uuid()) @db.Uuid
+  number      String             @unique
+  clinicId    String             @db.Uuid
+  periodMonth String             // "2026-12"
+  currency    String             @db.Char(3)
+  totalMinor  Int
+  status      InvoiceStatus      @default(DRAFT)
+  issuedAt    DateTime?          @db.Timestamptz
+  paidAt      DateTime?          @db.Timestamptz
+  clinic      Clinic             @relation(fields: [clinicId], references: [id])
+  records     CommissionRecord[]
+
+  @@unique([clinicId, periodMonth, currency])
+}
+
+// ───────────── Communication & tasks ─────────────
+
+model Conversation {
+  id        String    @id @default(uuid()) @db.Uuid
+  caseId    String?   @unique @db.Uuid // null = triage
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  case      Case?     @relation(fields: [caseId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id             String           @id @default(uuid()) @db.Uuid
+  conversationId String           @db.Uuid
+  channel        Channel
+  direction      MessageDirection
+  senderUserId   String?          @db.Uuid
+  externalId     String?          // provider message id
+  externalFrom   String?          // phone / chat id / email for unmatched inbound
+  bodyEncrypted  Bytes            // messages may contain medical details
+  keyVersion     Int
+  visibleToClinic Boolean         @default(false)
+  deliveredAt    DateTime?        @db.Timestamptz
+  readAt         DateTime?        @db.Timestamptz
+  createdAt      DateTime         @default(now()) @db.Timestamptz
+  conversation   Conversation     @relation(fields: [conversationId], references: [id])
+
+  @@unique([channel, externalId])
+  @@index([conversationId, createdAt])
+}
+
+model MessageTemplate {
+  id       String  @id @default(uuid()) @db.Uuid
+  key      String
+  channel  Channel
+  locale   Locale
+  subject  String?
+  body     String
+  isActive Boolean @default(true)
+
+  @@unique([key, channel, locale])
+}
+
+model Task {
+  id          String     @id @default(uuid()) @db.Uuid
+  caseId      String?    @db.Uuid
+  assigneeId  String?    @db.Uuid
+  title       String
+  dueAt       DateTime?  @db.Timestamptz
+  status      TaskStatus @default(OPEN)
+  autoKey     String?    @unique // idempotency for SLA/follow-up tasks
+  createdAt   DateTime   @default(now()) @db.Timestamptz
+  completedAt DateTime?  @db.Timestamptz
+  case        Case?      @relation(fields: [caseId], references: [id])
+  assignee    User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  @@index([assigneeId, status, dueAt])
+}
+
+// ───────────── Quality ─────────────
+
+model Review {
+  id          String       @id @default(uuid()) @db.Uuid
+  caseId      String       @db.Uuid
+  clinicId    String       @db.Uuid
+  doctorId    String?      @db.Uuid
+  rating      Int          // 1–5
+  text        String?
+  locale      Locale
+  publicOptIn Boolean      @default(false)
+  status      ReviewStatus @default(PENDING)
+  publishedAt DateTime?    @db.Timestamptz
+  createdAt   DateTime     @default(now()) @db.Timestamptz
+  case        Case         @relation(fields: [caseId], references: [id])
+  clinic      Clinic       @relation(fields: [clinicId], references: [id])
+  doctor      Doctor?      @relation(fields: [doctorId], references: [id])
+
+  @@index([clinicId, status])
+}
+
+model ComplicationReport {
+  id                   String             @id @default(uuid()) @db.Uuid
+  caseId               String             @db.Uuid
+  clinicId             String             @db.Uuid
+  reportedById         String             @db.Uuid
+  descriptionEncrypted Bytes
+  clinicResponseEncrypted Bytes?
+  keyVersion           Int
+  status               ComplicationStatus @default(OPEN)
+  createdAt            DateTime           @default(now()) @db.Timestamptz
+  resolvedAt           DateTime?          @db.Timestamptz
+  case                 Case               @relation(fields: [caseId], references: [id])
+  clinic               Clinic             @relation(fields: [clinicId], references: [id])
+
+  @@index([clinicId, status])
+}
+
+// ───────────── Free consultation calls & price references ─────────────
+
+model ConsultationAvailability {
+  id            String    @id @default(uuid()) @db.Uuid
+  coordinatorId String    @db.Uuid
+  weekday       Int       // 1 = Monday … 7 = Sunday, Asia/Tbilisi
+  startMinute   Int
+  endMinute     Int
+  languages     Locale[]
+  validFrom     DateTime? @db.Date
+  validTo       DateTime? @db.Date
+  coordinator   User      @relation(fields: [coordinatorId], references: [id], onDelete: Cascade)
+
+  @@index([coordinatorId])
+}
+
+model ConsultationBooking {
+  id            String             @id @default(uuid()) @db.Uuid
+  coordinatorId String             @db.Uuid
+  caseId        String?            @db.Uuid
+  startsAt      DateTime           @db.Timestamptz
+  endsAt        DateTime           @db.Timestamptz
+  callType      CallType
+  status        ConsultationStatus @default(BOOKED)
+  name          String
+  email         String
+  phone         String?
+  language      Locale
+  visitorTimeZone String
+  procedureKey  String?
+  cancelTokenHash String           @unique
+  attribution   Json?
+  createdAt     DateTime           @default(now()) @db.Timestamptz
+  coordinator   User               @relation(fields: [coordinatorId], references: [id])
+  case          Case?              @relation(fields: [caseId], references: [id])
+
+  @@index([coordinatorId, startsAt])
+}
+
+model HomePriceReference {
+  id          String    @id @default(uuid()) @db.Uuid
+  procedureId String    @db.Uuid
+  countryCode String    @db.Char(2)
+  currency    String    @db.Char(3)
+  minMinor    Int
+  maxMinor    Int
+  sourceUrl   String
+  checkedAt   DateTime  @db.Date
+  procedure   Procedure @relation(fields: [procedureId], references: [id])
+
+  @@unique([procedureId, countryCode])
+}
+
+model Redirect {
+  fromPath   String   @id
+  toPath     String
+  statusCode Int      @default(301)
+  createdAt  DateTime @default(now()) @db.Timestamptz
+}
+
+// ───────────── Partners (v2) ─────────────
+
+model Partner {
+  id           String            @id @default(uuid()) @db.Uuid
+  type         PartnerType
+  name         String
+  contactEmail String?
+  commissionBp Int?
+  isActive     Boolean           @default(true)
+  itemTypes    PackageItemType[]
+  cases        Case[]
+  users        User[]            @relation("FacilitatorUser")
+}
+
+// ───────────── Content ─────────────
+
+model Page {
+  id                 String        @id @default(uuid()) @db.Uuid
+  primaryKeyword     String?
+  secondaryKeywords  String[]
+  translationGroupId String        @db.Uuid
+  locale             Locale
+  slug               String
+  kind               String        // "procedure-country", "comparison", "guide", "legal", "static", "sensitive"
+  title              String
+  body               String        // Markdown
+  reviewedByDoctorId String?       @db.Uuid
+  reviewedAt         DateTime?     @db.Timestamptz
+  seoTitle           String?
+  seoDescription     String?
+  ogImageUrl         String?
+  status             ContentStatus @default(DRAFT)
+  publishedAt        DateTime?     @db.Timestamptz
+  updatedAt          DateTime      @updatedAt @db.Timestamptz
+
+  @@unique([locale, slug])
+  @@index([translationGroupId])
+}
+
+model Post {
+  id                 String        @id @default(uuid()) @db.Uuid
+  primaryKeyword     String?
+  secondaryKeywords  String[]
+  translationGroupId String        @db.Uuid
+  locale             Locale
+  slug               String
+  title              String
+  excerpt            String?
+  body               String
+  authorDoctorId     String?       @db.Uuid
+  reviewedAt         DateTime?     @db.Timestamptz
+  specialtyKey       String?
+  tags               String[]
+  seoTitle           String?
+  seoDescription     String?
+  ogImageUrl         String?
+  status             ContentStatus @default(DRAFT)
+  publishedAt        DateTime?     @db.Timestamptz
+  createdAt          DateTime      @default(now()) @db.Timestamptz
+  updatedAt          DateTime      @updatedAt @db.Timestamptz
+  author             Doctor?       @relation(fields: [authorDoctorId], references: [id])
+
+  @@unique([locale, slug])
+  @@index([status, publishedAt])
+}
+
+model Story {
+  id                 String        @id @default(uuid()) @db.Uuid
+  translationGroupId String        @db.Uuid
+  locale             Locale
+  slug               String
+  title              String
+  body               String
+  caseId             String?       @db.Uuid // consented case; never exposed publicly
+  mediaKeys          String[]      // only media covered by PUBLIC_MEDIA consent
+  status             ContentStatus @default(DRAFT)
+  publishedAt        DateTime?     @db.Timestamptz
+
+  @@unique([locale, slug])
+}
+
+// ───────────── Analytics, audit, settings ─────────────
+
+model AnalyticsEvent {
+  id          BigInt   @id @default(autoincrement())
+  name        String
+  anonymousId String?
+  userId      String?  @db.Uuid
+  locale      Locale?
+  countryCode String?  @db.Char(2)
+  specialtyKey String? // null for sensitive specialties
+  path        String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  valueMinor  Int?
+  currency    String?  @db.Char(3)
+  properties  Json?    // never health data
+  createdAt   DateTime @default(now()) @db.Timestamptz
+
+  @@index([name, createdAt])
+  @@index([utmSource, createdAt])
+}
+
+model AuditLog {
+  id        BigInt   @id @default(autoincrement())
+  actorId   String?  @db.Uuid
+  action    String   // "file.view", "case.share", "offer.accept", "refund.create", ...
+  entity    String
+  entityId  String?
+  ip        String?
+  userAgent String?
+  meta      Json?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  actor     User?    @relation(fields: [actorId], references: [id])
+
+  @@index([entity, entityId])
+  @@index([actorId, createdAt])
+}
+
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt @db.Timestamptz
+}

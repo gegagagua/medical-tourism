@@ -1,0 +1,96 @@
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-text), system-ui, sans-serif;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: 6px;
+  }
+
+  /* Tabular figures for prices (DESIGN.md §3.2). */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--mineral);
+    color: var(--ink);
+  }
+
+  hr {
+    border-color: var(--line);
+  }
+
+  a {
+    color: var(--balcony);
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-input px-5 py-3
+      text-body font-medium transition-colors;
+    min-height: 44px; /* DESIGN.md §10 tap target */
+  }
+  .btn-primary {
+    background: var(--saffron);
+    color: var(--ink); /* must stay ≥ 4.5:1 — see §3.1 */
+  }
+  .btn-primary:hover { filter: brightness(0.96); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover { background: var(--mineral); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .input {
+    @apply w-full rounded-input bg-surface px-3 py-2 text-body;
+    border: 1px solid var(--line);
+    min-height: 44px;
+  }
+  .input:focus { border-color: var(--balcony); }
+
+  .hairline { border-color: var(--line); }
+
+  .panel {
+    @apply rounded-panel bg-surface p-6;
+    border: 1px solid var(--line);
+  }
+
+  /* Ticket shape — see Ticket component for the full visual. */
+  .ticket-shell {
+    @apply rounded-ticket bg-surface;
+    box-shadow: var(--shadow-ticket, 0 24px 48px -24px rgba(22, 36, 44, 0.35));
+    border: 1px solid var(--line);
+    position: relative;
+  }
+}
+
+/* RTL — mirror arrows etc. Logical properties already flow correctly. */
+[dir='rtl'] .flip-x { transform: scaleX(-1); }

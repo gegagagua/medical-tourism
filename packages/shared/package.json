@@ -1,0 +1,44 @@
+{
+  "name": "@medtour/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./i18n": {
+      "types": "./src/i18n/index.ts",
+      "default": "./src/i18n/index.ts"
+    },
+    "./i18n/routes": {
+      "types": "./src/i18n/routes.ts",
+      "default": "./src/i18n/routes.ts"
+    },
+    "./catalog": {
+      "types": "./src/catalog/index.ts",
+      "default": "./src/catalog/index.ts"
+    },
+    "./schemas": {
+      "types": "./src/schemas/index.ts",
+      "default": "./src/schemas/index.ts"
+    },
+    "./utils": {
+      "types": "./src/utils/index.ts",
+      "default": "./src/utils/index.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@medtour/config": "workspace:*",
+    "typescript": "^5.6.3"
+  }
+}

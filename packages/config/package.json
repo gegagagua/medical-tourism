@@ -1,0 +1,12 @@
+{
+  "name": "@medtour/config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.js",
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.next.json",
+    "tsconfig.lib.json",
+    "eslint.base.cjs"
+  ]
+}

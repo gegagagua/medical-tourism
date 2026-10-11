@@ -1,0 +1,334 @@
+{
+  "brand": {
+    "name": "Medtour Georgia",
+    "disclaimer": "We are an organiser of medical trips to Georgia, not a healthcare provider."
+  },
+  "nav": {
+    "dental": "Dental",
+    "hair": "Hair",
+    "skin": "Skin",
+    "prices": "Prices",
+    "clinics": "Clinics",
+    "howItWorks": "How it works",
+    "aboutUs": "About us",
+    "contact": "Contact",
+    "bookCall": "Book a free call",
+    "bookNow": "Book now",
+    "getPlan": "Get my plan",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "specialties": "Specialties",
+    "pricesByCountry": "Prices by country",
+    "legal": "Legal",
+    "aboutUs": "About us",
+    "faq": "FAQ",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "notAClinic": "We are not a clinic."
+  },
+  "locales": {
+    "en": "English",
+    "de": "Deutsch",
+    "ru": "Русский",
+    "he": "עברית"
+  },
+  "common": {
+    "estimate": "Estimate — your exact plan comes from the clinic after reviewing your X-ray.",
+    "updated": "updated {date}",
+    "source": "Source",
+    "learnMore": "Learn more",
+    "readMore": "Read more",
+    "nights": "{n, plural, one {# night} other {# nights}}",
+    "visits": "{n, plural, one {# visit} other {# visits}}",
+    "atHome": "At home",
+    "inGeorgia": "In Georgia",
+    "stay": "Stay",
+    "coordinator": "Coordinator",
+    "procedure": "Treatment",
+    "homeCity": "From",
+    "destination": "Tbilisi",
+    "quantity": "Quantity",
+    "price": "Price",
+    "savings": "You save",
+    "included": "What's included",
+    "notIncluded": "Not included",
+    "verifiedTreatment": "Verified treatment",
+    "backToTop": "Back to top"
+  },
+  "hero": {
+    "titleDental": "Dental implants in Tbilisi, planned before you fly.",
+    "subtitleDental": "Fixed price from a checked clinic. One coordinator from airport to follow-up.",
+    "ctaPrimary": "Get my plan",
+    "ctaSecondary": "Book a free call",
+    "proof1": "2 checked clinics",
+    "proof2": "written warranty",
+    "proof3": "English, Russian, Hebrew",
+    "titleHairTransplant": "Hair transplant in Tbilisi, planned before you fly.",
+    "subtitleHair": "Fixed price per graft, named doctor, four quiet nights to recover."
+  },
+  "ticket": {
+    "home": "From",
+    "destination": "Tbilisi",
+    "procedure": "Treatment",
+    "atHome": "At home",
+    "inGeorgia": "In Georgia",
+    "stay": "Stay",
+    "coordinator": "Coordinator",
+    "cta": "Get my exact plan",
+    "selectCountry": "Choose your country",
+    "selectProcedure": "Choose a procedure",
+    "quantity": "Quantity",
+    "estimate": "Estimate"
+  },
+  "sections": {
+    "priceTable": {
+      "title": "Prices at a glance",
+      "subtitle": "Real numbers from checked clinics. Small procedures are added during your visit — they are not the reason to travel.",
+      "colProcedure": "Procedure",
+      "colHome": "Your country",
+      "colGeorgia": "Georgia",
+      "colIncluded": "What's included"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "A real sequence. Nothing waits in silence.",
+      "step1": "Send photos or X-ray",
+      "step1Body": "Upload from your phone — camera works. Files are encrypted before storage.",
+      "step2": "Get plans from 1 to 3 clinics",
+      "step2Body": "Each plan is a fixed price, a named doctor and the number of visits.",
+      "step3": "Pay a deposit",
+      "step3Body": "10% to confirm (or $100, whichever is more). The balance is paid at the clinic.",
+      "step4": "We meet you at TBS",
+      "step4Body": "Named coordinator, driver with your flight number, hotel pre-checked.",
+      "step5": "Treatment",
+      "step5Body": "You know every visit in advance. The clinic marks each visit done.",
+      "step6": "Follow-up at home",
+      "step6Body": "Messages at 7, 30 and 90 days — a doctor can answer, not a form."
+    },
+    "clinics": {
+      "title": "How we check clinics",
+      "subtitle": "We visit every clinic in person before any patient does.",
+      "licenseVerified": "License verified",
+      "insurance": "Liability insurance on file",
+      "warranty": "Written warranty policy",
+      "siteVisit": "Site visit by our team",
+      "contract": "Signed partner contract"
+    },
+    "coordinator": {
+      "title": "Your coordinator",
+      "subtitle": "One person. From the first message to the follow-up.",
+      "languagesLabel": "Languages",
+      "bookCta": "Book a 15-min call",
+      "whatsapp": "WhatsApp",
+      "slotsIn": "Pick a time in your time zone",
+      "tbilisiTime": "Tbilisi time"
+    },
+    "stories": {
+      "title": "Patient stories",
+      "subtitle": "Two long stories. No carousel.",
+      "readStory": "Read the full story"
+    },
+    "guide": {
+      "title": "Tbilisi while you heal",
+      "subtitle": "What a 6-night stay looks like."
+    },
+    "compare": {
+      "title": "Georgia or Turkey?",
+      "subtitle": "An honest comparison. Turkey is often cheaper. Georgia is quieter.",
+      "colAspect": "What matters",
+      "colGeorgia": "Georgia",
+      "colTurkey": "Turkey"
+    },
+    "faq": {
+      "title": "Questions patients ask",
+      "entries": {
+        "is-it-safe": {
+          "q": "Is it safe to have treatment abroad?",
+          "a": "Only partner clinics with a verified license, insurance and a written warranty are offered. Every clinic is visited in person by our team before a patient is sent."
+        },
+        "how-is-price-fixed": {
+          "q": "How is the price fixed?",
+          "a": "The clinic reviews your files and sends a plan with a fixed price in writing. The price shown to you equals the clinic's quote; our fee is on non-medical items only (hotel, transfer)."
+        },
+        "what-if-complication": {
+          "q": "What happens if there's a complication?",
+          "a": "Follow-up messages at 7, 30 and 90 days route medical questions back to the clinic and your coordinator. Warranty details are set per clinic in writing."
+        },
+        "how-many-visits": {
+          "q": "How many visits are needed?",
+          "a": "Dental implants typically need two visits (surgery, then the crown). Hair transplant is one visit. The procedure page lists visits and stay length."
+        },
+        "what-about-warranty": {
+          "q": "What is the warranty?",
+          "a": "Five years on implants and one year on grafts, in writing from the clinic. Specifics are on each clinic's page."
+        },
+        "can-i-bring-companion": {
+          "q": "Can I bring someone with me?",
+          "a": "Yes — tell us when you fill in the request. Hotels and transfers are planned for the number of travellers."
+        },
+        "what-languages": {
+          "q": "In which languages are you available?",
+          "a": "English, Russian and Hebrew at launch. Arabic and German are coming."
+        },
+        "how-pay-deposit": {
+          "q": "How do I pay the deposit?",
+          "a": "Online by card after you accept an offer. The balance is paid at the clinic."
+        }
+      }
+    },
+    "closing": {
+      "title": "Ready to see your plan?",
+      "body": "Two routes: upload an X-ray and get fixed prices, or book 15 minutes with a coordinator — no account needed."
+    }
+  },
+  "bookingSheet": {
+    "title": "Book a free 15-minute call",
+    "step1": "How would you like to talk?",
+    "step1Options": {
+      "WHATSAPP_VIDEO": "WhatsApp video",
+      "PHONE": "Phone",
+      "GOOGLE_MEET": "Google Meet"
+    },
+    "step2": "Pick a time",
+    "step2YourTz": "Your time zone",
+    "step2Tbilisi": "Tbilisi time",
+    "step3": "Your details",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone / WhatsApp",
+    "language": "Call language",
+    "procedureOfInterest": "What are you interested in?",
+    "consent": "I agree to be contacted for this call and have read the privacy notice.",
+    "submit": "Book the call",
+    "submitting": "Booking…",
+    "success": "Your call is booked. We've sent a confirmation to your email with a calendar file.",
+    "errorGeneric": "We couldn't book this call. Please try another slot."
+  },
+  "pages": {
+    "specialtyDentistry": {
+      "title": "Dental treatment in Georgia",
+      "intro": "Implants, All-on-4, veneers and routine work from vetted clinics in Tbilisi and Batumi.",
+      "proceduresTitle": "Procedures"
+    },
+    "specialtyHair": {
+      "title": "Hair transplant in Georgia",
+      "intro": "FUE and DHI by named doctors with a 1-year graft survival guarantee."
+    },
+    "specialtyDermatology": {
+      "title": "Dermatology in Georgia",
+      "intro": "Skin consultations, treatments and recovery stays in Tbilisi."
+    },
+    "procedureImplants": {
+      "title": "Dental implants in Tbilisi",
+      "intro": "Fixed price per implant, in writing, from a checked clinic. Two visits, around six nights.",
+      "whatIsIt": "What is a dental implant?",
+      "whatIsItBody": "A titanium post placed in the jawbone replaces the root of a lost tooth. After healing the final crown is fitted.",
+      "whoItSuits": "Who it suits",
+      "whoItSuitsBody": "Adults with a missing tooth and healthy bone, or who can have a bone graft. Not for uncontrolled diabetes or smokers mid-treatment.",
+      "visits": "Visits",
+      "visitsBody": "First visit: 2–3 days for implant placement. Second visit after healing: 2–3 days for the crown.",
+      "pricesLabel": "Prices from checked clinics"
+    },
+    "allOn4": {
+      "title": "All-on-4 in Tbilisi",
+      "intro": "Four implants per arch and a fixed bridge, planned in writing before you fly."
+    },
+    "veneers": {
+      "title": "Dental veneers in Tbilisi",
+      "intro": "Ceramic or composite veneers. Two visits over about five nights."
+    },
+    "fue": {
+      "title": "FUE hair transplant in Tbilisi",
+      "intro": "FUE by a named doctor, four nights, a written one-year graft survival guarantee."
+    },
+    "dhi": {
+      "title": "DHI hair transplant in Tbilisi",
+      "intro": "DHI implanter pens for finer angles and lower touch. Four nights, written guarantee."
+    },
+    "prices": {
+      "title": "Prices",
+      "intro": "Real ranges across checked clinics. Updated regularly.",
+      "filterCountry": "Filter by country"
+    },
+    "clinics": {
+      "title": "Clinics",
+      "intro": "Each clinic has been visited by our team."
+    },
+    "clinic": {
+      "licenseLabel": "License",
+      "warrantyLabel": "Warranty",
+      "doctorsTitle": "Doctors",
+      "pricesTitle": "Prices",
+      "checksTitle": "Checks passed"
+    },
+    "doctors": { "title": "Doctors" },
+    "stories": { "title": "Patient stories" },
+    "tbilisiGuide": {
+      "title": "Tbilisi while you heal",
+      "intro": "What a six-night stay in Tbilisi actually looks like."
+    },
+    "howItWorks": {
+      "title": "How a trip works",
+      "intro": "Six steps, in order. Deposit and refund rules are at the bottom."
+    },
+    "faq": {
+      "title": "Frequently asked questions"
+    },
+    "compareDental": {
+      "title": "Georgia vs Turkey — dental implants",
+      "intro": "An honest look. Turkey is often cheaper. Georgia is quieter, with fewer patients per clinic."
+    },
+    "request": {
+      "title": "Get my plan",
+      "intro": "Five short steps. Autosaves. Works with one thumb."
+    },
+    "about": {
+      "title": "About Medtour Georgia",
+      "intro": "A small team in Tbilisi that organises medical trips. Dentistry first, hair and skin next.",
+      "missionTitle": "Our mission",
+      "missionBody": "Make the right clinic abroad as easy to pick as the right one at home. Fixed prices, named doctors, one coordinator from the first message to the last follow-up.",
+      "numbersTitle": "By the numbers",
+      "teamTitle": "The team",
+      "teamBody": "Six coordinators, three medical reviewers, one legal advisor. Nobody takes a case they can't personally see through.",
+      "warrantyTitle": "What a written warranty means",
+      "warrantyBody": "Every partner clinic signs a warranty in English. Five years on implants, two on crowns and veneers, one year on hair grafts. If a complication appears inside that window and inside the written scope, the clinic replaces or revises at no extra charge.",
+      "timelineTitle": "A short history",
+      "timeline1": "Two founders, one dental partner, one coordinator.",
+      "timeline2": "First 100 patients, mostly from the UK diaspora.",
+      "timeline3": "Three clinics vetted, hair transplant partner added, Hebrew-speaking coordinator hired.",
+      "timeline4": "Site visits became mandatory. Written warranty standardised. 1,200+ patients since launch.",
+      "notAClinic": "We are an organiser of medical trips, not a healthcare provider. All clinical decisions belong to the named doctor at the clinic.",
+      "whyUs": "Why patients choose us",
+      "whyUsItems": {
+        "a": "Fixed price before you fly — in writing, signed by the dentist.",
+        "b": "One named coordinator from first message to 90-day follow-up.",
+        "c": "Vetted clinics only — license, insurance, warranty, site visit, contract.",
+        "d": "No commission on medical items. Transparent fee only on hotel and transfer."
+      }
+    },
+    "contact": {
+      "title": "Contact our coordinators",
+      "intro": "English, German, Russian or Hebrew — one working-hour reply.",
+      "formTitle": "Send a message",
+      "formName": "Your name",
+      "formEmail": "Email",
+      "formPhone": "Phone or WhatsApp",
+      "formSubject": "What are you asking about?",
+      "formMessage": "Your message",
+      "formSubmit": "Send",
+      "formSuccess": "Message sent. We'll be in touch within one working hour.",
+      "address": "Address",
+      "addressValue": "11 Rustaveli Avenue, Tbilisi 0108, Georgia",
+      "hours": "Hours",
+      "hoursValue": "Monday–Saturday · 09:00–20:00 Asia/Tbilisi",
+      "whatsapp": "WhatsApp — fastest",
+      "telegram": "Telegram",
+      "phone": "Phone",
+      "email": "Email"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+/* DESIGN.md §3 — tokens. Light default; dark via `.dark` on <html>. */
+:root {
+  --paper: #f6f8f7;
+  --surface: #ffffff;
+  --ink: #16242c;
+  --ink-muted: #55656d;
+  --balcony: #2e6b66;
+  --mineral: #d3e6df;
+  --saffron: #e2a12b;
+  --alert: #b3261e;
+  --line: #d9e1de;
+
+  /* Focus ring: 2px balcony + 2px offset. */
+  --focus-ring: 0 0 0 2px var(--balcony), 0 0 0 4px var(--paper);
+}
+
+.dark {
+  --paper: #0f1a1f;
+  --surface: #16242c;
+  --ink: #e8efec;
+  --ink-muted: #9fb0b6;
+  --balcony: #6fb3ac;
+  --mineral: #1f3833;
+  --saffron: #f0b547;
+  --alert: #d55a52;
+  --line: #2a3b42;
+  --focus-ring: 0 0 0 2px var(--balcony), 0 0 0 4px var(--paper);
+}

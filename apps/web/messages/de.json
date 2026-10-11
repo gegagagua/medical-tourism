@@ -1,0 +1,334 @@
+{
+  "brand": {
+    "name": "Medtour Georgien",
+    "disclaimer": "Wir organisieren medizinische Reisen nach Georgien, sind aber kein Gesundheitsdienstleister."
+  },
+  "nav": {
+    "dental": "Zahn",
+    "hair": "Haare",
+    "skin": "Haut",
+    "prices": "Preise",
+    "clinics": "Kliniken",
+    "howItWorks": "So funktioniert es",
+    "aboutUs": "Über uns",
+    "contact": "Kontakt",
+    "bookCall": "Kostenloses Gespräch",
+    "bookNow": "Jetzt buchen",
+    "getPlan": "Plan erhalten",
+    "skipToContent": "Zum Inhalt springen",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen"
+  },
+  "footer": {
+    "specialties": "Fachgebiete",
+    "pricesByCountry": "Preise nach Land",
+    "legal": "Rechtliches",
+    "aboutUs": "Über uns",
+    "faq": "Häufige Fragen",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "cookies": "Cookies",
+    "notAClinic": "Wir sind keine Klinik."
+  },
+  "locales": {
+    "en": "English",
+    "de": "Deutsch",
+    "ru": "Русский",
+    "he": "עברית"
+  },
+  "common": {
+    "estimate": "Schätzung — Ihr genauer Plan kommt von der Klinik nach Prüfung Ihres Röntgenbilds.",
+    "updated": "aktualisiert {date}",
+    "source": "Quelle",
+    "learnMore": "Mehr erfahren",
+    "readMore": "Weiterlesen",
+    "nights": "{n, plural, one {# Nacht} other {# Nächte}}",
+    "visits": "{n, plural, one {# Besuch} other {# Besuche}}",
+    "atHome": "Zu Hause",
+    "inGeorgia": "In Georgien",
+    "stay": "Aufenthalt",
+    "coordinator": "Koordinator",
+    "procedure": "Behandlung",
+    "homeCity": "Von",
+    "destination": "Tiflis",
+    "quantity": "Menge",
+    "price": "Preis",
+    "savings": "Sie sparen",
+    "included": "Inklusive",
+    "notIncluded": "Nicht inklusive",
+    "verifiedTreatment": "Verifizierte Behandlung",
+    "backToTop": "Nach oben"
+  },
+  "hero": {
+    "titleDental": "Zahnimplantate in Tiflis, geplant bevor Sie fliegen.",
+    "subtitleDental": "Festpreis einer geprüften Klinik. Ein Koordinator vom Flughafen bis zur Nachsorge.",
+    "ctaPrimary": "Plan erhalten",
+    "ctaSecondary": "Kostenloses Gespräch",
+    "proof1": "2 geprüfte Kliniken",
+    "proof2": "schriftliche Garantie",
+    "proof3": "Deutsch, Englisch, Russisch",
+    "titleHairTransplant": "Haartransplantation in Tiflis, geplant bevor Sie fliegen.",
+    "subtitleHair": "Festpreis pro Graft, benannter Arzt, vier ruhige Nächte."
+  },
+  "ticket": {
+    "home": "Von",
+    "destination": "Tiflis",
+    "procedure": "Behandlung",
+    "atHome": "Zu Hause",
+    "inGeorgia": "In Georgien",
+    "stay": "Aufenthalt",
+    "coordinator": "Koordinator",
+    "cta": "Genauen Plan erhalten",
+    "selectCountry": "Land wählen",
+    "selectProcedure": "Behandlung wählen",
+    "quantity": "Menge",
+    "estimate": "Schätzung"
+  },
+  "sections": {
+    "priceTable": {
+      "title": "Preise im Überblick",
+      "subtitle": "Echte Zahlen geprüfter Kliniken. Kleinere Eingriffe werden vor Ort hinzugefügt — sie sind kein Grund zu reisen.",
+      "colProcedure": "Behandlung",
+      "colHome": "Ihr Land",
+      "colGeorgia": "Georgien",
+      "colIncluded": "Enthalten"
+    },
+    "howItWorks": {
+      "title": "So funktioniert es",
+      "subtitle": "Eine klare Abfolge. Keine stille Wartezeit.",
+      "step1": "Fotos oder Röntgenbild senden",
+      "step1Body": "Hochladen vom Handy — Kamera funktioniert. Dateien werden vor der Speicherung verschlüsselt.",
+      "step2": "Pläne von 1–3 Kliniken erhalten",
+      "step2Body": "Jeder Plan ist ein Festpreis, ein namentlich benannter Arzt und die Anzahl der Besuche.",
+      "step3": "Anzahlung leisten",
+      "step3Body": "10% zur Bestätigung (oder $100, je nachdem was höher ist). Der Rest wird in der Klinik gezahlt.",
+      "step4": "Abholung am TBS",
+      "step4Body": "Benannter Koordinator, Fahrer mit Ihrer Flugnummer, Hotel bereits geprüft.",
+      "step5": "Behandlung",
+      "step5Body": "Jeder Besuch ist im Voraus bekannt. Die Klinik quittiert jeden Termin.",
+      "step6": "Nachsorge zu Hause",
+      "step6Body": "Nachrichten nach 7, 30 und 90 Tagen — ein Arzt antwortet, kein Formular."
+    },
+    "clinics": {
+      "title": "Wie wir Kliniken prüfen",
+      "subtitle": "Wir besuchen jede Klinik persönlich, bevor ein Patient dort behandelt wird.",
+      "licenseVerified": "Lizenz geprüft",
+      "insurance": "Haftpflichtversicherung vorhanden",
+      "warranty": "Schriftliche Garantie",
+      "siteVisit": "Vor-Ort-Besuch unseres Teams",
+      "contract": "Unterzeichneter Partnervertrag"
+    },
+    "coordinator": {
+      "title": "Ihr Koordinator",
+      "subtitle": "Eine Person. Von der ersten Nachricht bis zur Nachsorge.",
+      "languagesLabel": "Sprachen",
+      "bookCta": "15-Minuten-Gespräch buchen",
+      "whatsapp": "WhatsApp",
+      "slotsIn": "Wählen Sie eine Uhrzeit in Ihrer Zeitzone",
+      "tbilisiTime": "Tifliser Zeit"
+    },
+    "stories": {
+      "title": "Patientengeschichten",
+      "subtitle": "Zwei ausführliche Geschichten. Kein Karussell.",
+      "readStory": "Ganze Geschichte lesen"
+    },
+    "guide": {
+      "title": "Tiflis während der Heilung",
+      "subtitle": "So sehen sechs Nächte aus."
+    },
+    "compare": {
+      "title": "Georgien oder Türkei?",
+      "subtitle": "Ehrlicher Vergleich. Türkei ist oft günstiger. Georgien ist ruhiger.",
+      "colAspect": "Was zählt",
+      "colGeorgia": "Georgien",
+      "colTurkey": "Türkei"
+    },
+    "faq": {
+      "title": "Was Patienten fragen",
+      "entries": {
+        "is-it-safe": {
+          "q": "Ist eine Behandlung im Ausland sicher?",
+          "a": "Nur Partnerkliniken mit geprüfter Lizenz, Versicherung und schriftlicher Garantie werden angeboten. Jede Klinik wird von unserem Team persönlich besucht, bevor ein Patient entsandt wird."
+        },
+        "how-is-price-fixed": {
+          "q": "Wie wird der Preis festgelegt?",
+          "a": "Die Klinik prüft Ihre Dateien und sendet einen schriftlichen Plan mit Festpreis. Der Ihnen gezeigte Preis entspricht dem Angebot der Klinik; unsere Gebühr gilt nur für Nicht-medizinische Posten (Hotel, Transfer)."
+        },
+        "what-if-complication": {
+          "q": "Was passiert bei Komplikationen?",
+          "a": "Nachrichten nach 7, 30 und 90 Tagen leiten medizinische Fragen an die Klinik und den Koordinator weiter. Garantiedetails stehen schriftlich pro Klinik fest."
+        },
+        "how-many-visits": {
+          "q": "Wie viele Besuche sind nötig?",
+          "a": "Zahnimplantate benötigen in der Regel zwei Besuche (Operation, dann Krone). Haartransplantation ist ein Besuch. Die Behandlungsseite listet Besuche und Aufenthaltsdauer."
+        },
+        "what-about-warranty": {
+          "q": "Was ist die Garantie?",
+          "a": "Fünf Jahre auf Implantate und ein Jahr auf Grafts, schriftlich von der Klinik. Details auf jeder Klinikseite."
+        },
+        "can-i-bring-companion": {
+          "q": "Kann ich jemanden mitbringen?",
+          "a": "Ja — teilen Sie uns das in der Anfrage mit. Hotel und Transfer werden entsprechend geplant."
+        },
+        "what-languages": {
+          "q": "In welchen Sprachen sind Sie erreichbar?",
+          "a": "Englisch, Deutsch, Russisch und Hebräisch zum Start. Arabisch folgt."
+        },
+        "how-pay-deposit": {
+          "q": "Wie zahle ich die Anzahlung?",
+          "a": "Online per Karte nach Annahme eines Angebots. Der Rest wird in der Klinik gezahlt."
+        }
+      }
+    },
+    "closing": {
+      "title": "Bereit für Ihren Plan?",
+      "body": "Zwei Wege: Röntgenbild hochladen und Festpreise erhalten oder 15 Minuten mit einem Koordinator — ohne Konto."
+    }
+  },
+  "bookingSheet": {
+    "title": "Kostenloses 15-Minuten-Gespräch buchen",
+    "step1": "Wie möchten Sie sprechen?",
+    "step1Options": {
+      "WHATSAPP_VIDEO": "WhatsApp Video",
+      "PHONE": "Telefon",
+      "GOOGLE_MEET": "Google Meet"
+    },
+    "step2": "Zeit wählen",
+    "step2YourTz": "Ihre Zeitzone",
+    "step2Tbilisi": "Tifliser Zeit",
+    "step3": "Ihre Daten",
+    "name": "Vollständiger Name",
+    "email": "E-Mail",
+    "phone": "Telefon / WhatsApp",
+    "language": "Sprache des Gesprächs",
+    "procedureOfInterest": "Woran sind Sie interessiert?",
+    "consent": "Ich stimme der Kontaktaufnahme für dieses Gespräch zu und habe die Datenschutzerklärung gelesen.",
+    "submit": "Gespräch buchen",
+    "submitting": "Wird gebucht…",
+    "success": "Ihr Gespräch ist gebucht. Wir haben eine Bestätigung mit Kalenderdatei an Ihre E-Mail gesendet.",
+    "errorGeneric": "Wir konnten das Gespräch nicht buchen. Bitte anderen Termin wählen."
+  },
+  "pages": {
+    "specialtyDentistry": {
+      "title": "Zahnbehandlung in Georgien",
+      "intro": "Implantate, All-on-4, Veneers und Routine aus geprüften Kliniken in Tiflis und Batumi.",
+      "proceduresTitle": "Behandlungen"
+    },
+    "specialtyHair": {
+      "title": "Haartransplantation in Georgien",
+      "intro": "FUE und DHI von benannten Ärzten mit 1-Jahres-Graft-Garantie."
+    },
+    "specialtyDermatology": {
+      "title": "Dermatologie in Georgien",
+      "intro": "Hautberatung, Behandlungen und Erholung in Tiflis."
+    },
+    "procedureImplants": {
+      "title": "Zahnimplantate in Tiflis",
+      "intro": "Festpreis pro Implantat, schriftlich, aus geprüfter Klinik. Zwei Besuche, etwa sechs Nächte.",
+      "whatIsIt": "Was ist ein Zahnimplantat?",
+      "whatIsItBody": "Ein Titanpfosten im Kieferknochen ersetzt die Wurzel eines verlorenen Zahns. Nach der Heilung wird die endgültige Krone eingesetzt.",
+      "whoItSuits": "Für wen",
+      "whoItSuitsBody": "Erwachsene mit fehlendem Zahn und gesundem Knochen (oder Möglichkeit zum Knochenaufbau). Nicht geeignet bei unkontrolliertem Diabetes oder während aktivem Rauchen.",
+      "visits": "Besuche",
+      "visitsBody": "Erster Besuch: 2–3 Tage zur Implantation. Zweiter Besuch nach Heilung: 2–3 Tage für die Krone.",
+      "pricesLabel": "Preise geprüfter Kliniken"
+    },
+    "allOn4": {
+      "title": "All-on-4 in Tiflis",
+      "intro": "Vier Implantate pro Kiefer und feste Brücke, schriftlich geplant vor dem Flug."
+    },
+    "veneers": {
+      "title": "Zahn-Veneers in Tiflis",
+      "intro": "Keramik oder Komposit. Zwei Besuche, etwa fünf Nächte."
+    },
+    "fue": {
+      "title": "FUE Haartransplantation in Tiflis",
+      "intro": "FUE durch benannten Arzt, vier Nächte, schriftliche 1-Jahres-Garantie."
+    },
+    "dhi": {
+      "title": "DHI Haartransplantation in Tiflis",
+      "intro": "DHI-Implanterstifte für feinere Winkel. Vier Nächte, schriftliche Garantie."
+    },
+    "prices": {
+      "title": "Preise",
+      "intro": "Echte Spannen geprüfter Kliniken. Regelmäßig aktualisiert.",
+      "filterCountry": "Nach Land filtern"
+    },
+    "clinics": {
+      "title": "Kliniken",
+      "intro": "Jede Klinik wurde von unserem Team besucht."
+    },
+    "clinic": {
+      "licenseLabel": "Lizenz",
+      "warrantyLabel": "Garantie",
+      "doctorsTitle": "Ärzte",
+      "pricesTitle": "Preise",
+      "checksTitle": "Bestandene Prüfungen"
+    },
+    "doctors": { "title": "Ärzte" },
+    "stories": { "title": "Patientengeschichten" },
+    "tbilisiGuide": {
+      "title": "Tiflis während der Heilung",
+      "intro": "So sieht ein realer Aufenthalt von sechs Nächten aus."
+    },
+    "howItWorks": {
+      "title": "Wie eine Reise abläuft",
+      "intro": "Sechs Schritte der Reihe nach. Anzahlungs- und Erstattungsregeln unten."
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen"
+    },
+    "compareDental": {
+      "title": "Georgien vs Türkei — Zahnimplantate",
+      "intro": "Ehrlicher Blick. Türkei oft günstiger. Georgien ruhiger, weniger Patienten pro Klinik."
+    },
+    "request": {
+      "title": "Plan erhalten",
+      "intro": "Fünf kurze Schritte. Automatisches Speichern. Mit einer Hand bedienbar."
+    },
+    "about": {
+      "title": "Über Medtour Georgien",
+      "intro": "Ein kleines Team in Tiflis, das medizinische Reisen organisiert. Zahn zuerst, Haar und Haut folgen.",
+      "missionTitle": "Unsere Mission",
+      "missionBody": "Die richtige Klinik im Ausland so einfach zu wählen machen wie die zu Hause. Festpreise, benannte Ärzte, ein Koordinator von der ersten Nachricht bis zur letzten Nachsorge.",
+      "numbersTitle": "In Zahlen",
+      "teamTitle": "Das Team",
+      "teamBody": "Sechs Koordinatoren, drei medizinische Prüfer, eine Rechtsberaterin. Niemand nimmt einen Fall an, den er nicht persönlich durchziehen kann.",
+      "warrantyTitle": "Was eine schriftliche Garantie bedeutet",
+      "warrantyBody": "Jede Partnerklinik unterschreibt eine Garantie auf Englisch. Fünf Jahre auf Implantate, zwei auf Kronen und Veneers, ein Jahr auf Grafts. Komplikationen in diesem Rahmen werden kostenlos ersetzt oder korrigiert.",
+      "timelineTitle": "Kurze Geschichte",
+      "timeline1": "Zwei Gründer, ein Zahnpartner, ein Koordinator.",
+      "timeline2": "Erste 100 Patienten, überwiegend aus der UK-Diaspora.",
+      "timeline3": "Drei Kliniken geprüft, Haartransplantation-Partner, hebräischsprachige Koordinatorin.",
+      "timeline4": "Vor-Ort-Besuche verpflichtend. Schriftliche Garantie standardisiert. 1.200+ Patienten seit Start.",
+      "notAClinic": "Wir sind Reiseorganisator, kein Gesundheitsdienstleister. Alle klinischen Entscheidungen gehören dem benannten Arzt in der Klinik.",
+      "whyUs": "Warum Patienten uns wählen",
+      "whyUsItems": {
+        "a": "Festpreis vor dem Flug — schriftlich, vom Zahnarzt unterschrieben.",
+        "b": "Ein benannter Koordinator von der ersten Nachricht bis zur 90-Tage-Nachsorge.",
+        "c": "Nur geprüfte Kliniken — Lizenz, Versicherung, Garantie, Vor-Ort-Besuch, Vertrag.",
+        "d": "Keine Provision auf medizinische Posten. Transparente Gebühr nur auf Hotel und Transfer."
+      }
+    },
+    "contact": {
+      "title": "Kontaktieren Sie unsere Koordinatoren",
+      "intro": "Deutsch, Englisch, Russisch oder Hebräisch — Antwort innerhalb einer Arbeitsstunde.",
+      "formTitle": "Nachricht senden",
+      "formName": "Ihr Name",
+      "formEmail": "E-Mail",
+      "formPhone": "Telefon oder WhatsApp",
+      "formSubject": "Worum geht es?",
+      "formMessage": "Ihre Nachricht",
+      "formSubmit": "Senden",
+      "formSuccess": "Nachricht gesendet. Wir melden uns innerhalb einer Arbeitsstunde.",
+      "address": "Adresse",
+      "addressValue": "Rustaveli Avenue 11, Tiflis 0108, Georgien",
+      "hours": "Öffnungszeiten",
+      "hoursValue": "Mo–Sa · 09:00–20:00 Asia/Tbilisi",
+      "whatsapp": "WhatsApp — am schnellsten",
+      "telegram": "Telegram",
+      "phone": "Telefon",
+      "email": "E-Mail"
+    }
+  }
+}
