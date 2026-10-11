@@ -4,9 +4,11 @@ import { FAQ_KEYS, type PublicLocale } from '@medtour/shared';
 import { buildMetadata, SITE_URL } from '@/lib/seo/metadata';
 import {
   breadcrumbLd,
+  dentistryServiceLd,
   faqLd,
   medicalBusinessLd,
   organizationLd,
+  speakableLd,
   webSiteLd,
 } from '@/lib/seo/jsonld';
 import { JsonLd } from '@/components/seo/jsonld';
@@ -65,6 +67,8 @@ export default async function HomePage({
       <JsonLd data={organizationLd(brand('name'))} />
       <JsonLd data={medicalBusinessLd(brand('name'))} />
       <JsonLd data={webSiteLd(brand('name'))} />
+      <JsonLd data={dentistryServiceLd(brand('name'))} />
+      <JsonLd data={speakableLd()} />
       <JsonLd data={breadcrumbLd([{ name: 'Home', url: `/${locale}` }])} />
       <JsonLd data={faqLd(faqs)} />
 

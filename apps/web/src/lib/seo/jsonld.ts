@@ -14,8 +14,15 @@ export function organizationLd(brand: string) {
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        availableLanguage: ['English', 'Russian', 'Hebrew'],
+        availableLanguage: ['English', 'German', 'Russian', 'Hebrew'],
       },
+    ],
+    sameAs: [
+      'https://wa.me/995322123456',
+      'https://t.me/medtour_ge',
+      'https://instagram.com/medtour_ge',
+      'https://facebook.com/medtour.ge',
+      'https://youtube.com/@medtour_ge',
     ],
   };
 }
@@ -26,6 +33,60 @@ export function webSiteLd(brand: string) {
     '@type': 'WebSite',
     name: brand,
     url: SITE_URL,
+    inLanguage: ['en', 'de', 'ru', 'he'],
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${SITE_URL}/en/prices?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+// `Service` schema aimed at the dentistry specialty. Lets LLMs and search engines
+// recognise the specific offer (service provider, area served, price range).
+export function dentistryServiceLd(brand: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Dental tourism',
+    name: 'Dental treatment in Georgia',
+    provider: { '@type': 'Organization', name: brand, url: SITE_URL },
+    areaServed: [
+      { '@type': 'Country', name: 'United Kingdom' },
+      { '@type': 'Country', name: 'Germany' },
+      { '@type': 'Country', name: 'Israel' },
+      { '@type': 'Country', name: 'France' },
+    ],
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'USD',
+      lowPrice: '350',
+      highPrice: '4500',
+      offerCount: '6',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Dental procedures',
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'MedicalProcedure', name: 'Dental implants' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'MedicalProcedure', name: 'All-on-4' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'MedicalProcedure', name: 'Dental veneers' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'MedicalProcedure', name: 'Zirconium crowns' } },
+      ],
+    },
+    url: `${SITE_URL}/en/dental-treatment-georgia`,
+  };
+}
+
+// Marks the FAQ as "speakable" so Google Assistant / voice readers can pick a crisp answer.
+export function speakableLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['#faq h2', '#faq [data-state="open"] [aria-controls]'],
+    },
   };
 }
 

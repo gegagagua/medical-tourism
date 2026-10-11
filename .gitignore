@@ -10,6 +10,7 @@ dist
 .DS_Store
 coverage
 .pnpm-store
+*.tsbuildinfo
 
 # Local attachments / screenshots dropped into the repo root
 *.jpeg
