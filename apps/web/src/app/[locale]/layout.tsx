@@ -7,6 +7,7 @@ import { display, text } from '@/lib/fonts';
 import { SiteHeader } from '@/components/site/site-header';
 import { SiteFooter } from '@/components/site/site-footer';
 import { FloatingWhatsApp } from '@/components/site/floating-whatsapp';
+import { GoogleAnalytics } from '@/components/site/google-analytics';
 
 export function generateStaticParams() {
   return PUBLIC_LOCALES.map((locale) => ({ locale }));
@@ -28,6 +29,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} className={`${display.variable} ${text.variable}`}>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a
